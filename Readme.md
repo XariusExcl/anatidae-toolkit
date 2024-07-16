@@ -29,7 +29,7 @@ Chaque jeu mis sur la borne aura besoin de ces 3 fichiers au minimum pour foncti
 
 Le fichier info.json stocke les informations de votre jeu (et optionnellement les highscores). Il doit être structuré de cette manière :
 
-```json
+```
 name: string,
 description: string, 
 creator: string,
