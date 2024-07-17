@@ -62,10 +62,10 @@ Le toolkit actuel utilise l’ancien Input Manager. Des axes et des boutons sont
 Dans le projet exemple, les boutons et axes sont attribués aux touches du clavier suivantes :
 
 ![Untitled](2.png)
-
-| Axes : | P1_Vertical, P1_Horizontal, P2_Vertical, P2_Horizontal |
-| --- | --- |
-| Boutons : | P1_B1, P1_B2, P1_B3, P1_B4, P1_B5, P1_B6, P1_Left, P1_Right, P1_Up, P1_Down, P2_B1, P2_B2, P2_B3, P2_B4, P2_B5, P2_B6, P2_Left, P2_Right, P2_Up, P2_Down |
+| Type | Nom |
+|:---:|-----|
+| Axes | P1_Vertical, P1_Horizontal, P2_Vertical, P2_Horizontal |
+| Boutons | P1_B1, P1_B2, P1_B3, P1_B4, P1_B5, P1_B6, P1_Left, P1_Right, P1_Up, P1_Down, P2_B1, P2_B2, P2_B3, P2_B4, P2_B5, P2_B6, P2_Left, P2_Right, P2_Up, P2_Down |
 
 Pour les utiliser dans vos scripts, écrivez `Input.GetAxis("P1_Horizontal")` ou `Input.GetButtonDown("P2_B4")` par exemple.
 
@@ -79,8 +79,6 @@ Le prefab AnatidaeInterface doit se trouver dans chaque scène où vous utiliser
 Vous pouvez modifier l’esthétique de ces objets librement.
 
 ![Untitled](3.png)
-
----
 
 ### Anatidae namespace (C#)
 
