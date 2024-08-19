@@ -6,21 +6,21 @@ Anatidae Toolkit contient tous les éléments nécessaires pour créer un jeu co
 
 Ce repo contient différents éléments pour démarrer un projet ou ajouter les fonctionnalités Anatidae à un jeu existant :
 
-- Un projet vierge : Configuré correctement pour démarrer un projet qui sera jouable sur la borne
+- Un projet vierge configuré correctement pour démarrer un projet qui sera jouable sur la borne
 - Anatidae.unitypackage (onglet Releases) : Pour rendre un jeu existant compatible avec la borne (de la configuration supplémentaire sera nécessaire, c.f **3. Anatidae Toolkit pour Unity**).
 
 ## 1. Fonctionnement de Anatidae
 
-Anatidae est une application qui permet de naviguer et lancer des jeux WebGL, ainsi que de stocker des informations supplémentaires comme des highscores.
+Anatidae est une application qui permet de naviguer et lancer des jeux compatible Web d'une libririe, ainsi que de stocker des informations supplémentaires sur le jeu et/ou des highscores.
 
 ## 2. Déploiement d’un jeu sur Anatidae Arcade
 
 ### Fichiers nécessaires :
 
-Chaque jeu mis sur la borne aura besoin de ces 3 fichiers au minimum pour fonctionner correctement :
+Chaque jeu mis sur la borne a besoin de ces 3 fichiers pour fonctionner correctement :
 
 - **index.html** : La page qui contient votre jeu.
-- **thumbnail.png :** L’image de couverture de votre jeu, affichée en background et en miniature.
+- **thumbnail.png :** L’image de couverture de votre jeu, affichée en background et en miniature (privilégiez un format carré 1:1).
 - **info.json :** Les informations de votre jeu, vu en détail ci-dessous.
 
 ![Untitled](1.png)
@@ -110,7 +110,7 @@ Voici les différentes méthodes utilisables dans vos scripts :
 
 ### Exemples
 
-Supposons que le joueur vient de terminer sa partie. Nous n’avons pas encore son pseudo, mais avant d’afficher `HighscoreInputManager`, nous pouvons vérifier si ce score sera affiché ou non sur la borne (c’est-à-dire, s’il dans le top 10 ou non).
+Supposons que le joueur vient de terminer sa partie. Nous n’avons pas encore son pseudo, mais avant d’afficher `HighscoreInputManager` pour qu'il puisse le saisir, nous pouvons vérifier si ce score sera affiché ou non sur la borne (c’est-à-dire, s’il est dans le top 10 ou non).
 
 Nous pouvons donc écrire une méthode comme ceci :
 
@@ -121,7 +121,7 @@ if (Anatidae.HighscoreManager.IsHighscore(score))
 }
 ```
 
-Le prefab s’occupera d’envoyer le score et de se fermer automatiquement lorsque l’envoi est réussi. Facile !
+Le prefab s’occupera d’envoyer le score avec le pseudo saisi (stocké ensuite dans `Anatidae.HighscoreManager.PlayerName`) et de se fermer automatiquement lorsque l’envoi est réussi. Facile !
 
 Maintenant, supposons que le joueur termine sa partie avec un nouveau record personnel et a déjà saisi son nom précédemment. Vous pouvez choisir d’envoyer le nouveau record sans afficher le menu de saisie de pseudo.
 
@@ -134,7 +134,7 @@ if (Anatidae.HighscoreManager.IsHighscore(score))
     Anatidae.HighscoreManager.ShowHighscoreInput(score);
   }
   else {
-    Anatidae.HighscoreManager.SetHighscore(Anatidae.HighscoreManager.PlayerName, score).ContinueWith(task => {
+    Anatidae.HighscoreManager.SetHighscore(Anatidae.HighscoreManager.PlayerName, score).ContinueWith(task => { // SetHighscore est asynchrone, nous devons utiliser cette syntaxe
       if (task.IsFaulted)
         Debug.LogError(task.Exception);
       else {
@@ -147,7 +147,7 @@ if (Anatidae.HighscoreManager.IsHighscore(score))
 
 ## 4. Anatidae API
 
-Si vous souhaitez interfacer directement avec l’API (Faire un jeu en Javascript pur ou avec un moteur de jeu différent, vous pouvez communiquer avec l’API Anatidae directement.
+Si vous souhaitez interfacer directement avec le serveur (si vous faites un jeu en Javascript pur ou avec un moteur de jeu différent), vous pouvez communiquer avec l’API Anatidae directement.
 
 Il est très recommandé d’installer le serveur en local, disponible ici :
 
