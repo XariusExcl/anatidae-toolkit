@@ -65,7 +65,7 @@ Dans le projet exemple, les boutons et axes sont attribués aux touches du clavi
 | Type | Nom |
 |:---:|-----|
 | Axes | P1_Vertical, P1_Horizontal, P2_Vertical, P2_Horizontal |
-| Boutons | P1_B1, P1_B2, P1_B3, P1_B4, P1_B5, P1_B6, P1_Left, P1_Right, P1_Up, P1_Down, P2_B1, P2_B2, P2_B3, P2_B4, P2_B5, P2_B6, P2_Left, P2_Right, P2_Up, P2_Down |
+| Boutons | P1_B1, P1_B2, P1_B3, P1_B4, P1_B5, P1_B6, P1_Left, P1_Right, P1_Up, P1_Down, P2_B1, P2_B2, P2_B3, P2_B4, P2_B5, P2_B6, Coin|
 
 Pour les utiliser dans vos scripts, écrivez `Input.GetAxis("P1_Horizontal")` ou `Input.GetButtonDown("P2_B4")` par exemple.
 
@@ -85,6 +85,10 @@ Vous pouvez modifier l’esthétique de ces objets librement.
 Tous les scripts du package sont dans un namespace appelé `Anatidae`, que vous pouvez importer dans vos scripts avec `using Anatidae;`, ou les utiliser directement en préfixant les méthodes et champs par `Anatidae.` .
 
 La gestion des highscores est faite par `HighscoreManager`.  Cette classe gère également l’affichage des différents menus intégrés au toolkit (`HighscoreUI` et `HighscoreNameInput`).
+
+Il est également nécessaire d'assigner la variable `GAME_NAME` de `HighscoreManager` avec le nom de votre jeu (sans espaces ni accents). Ce nom doit être le même nom que le dossier qui contiendra votre Build.
+
+![Untitled](4.png)
 
 Voici les différentes méthodes utilisables dans vos scripts :
 
@@ -131,16 +135,11 @@ Vous pouvez ajouter cette fonctionnalité au code précédent comme ceci :
 if (Anatidae.HighscoreManager.IsHighscore(score))
 {
   if (Anatidae.HighscoreManager.PlayerName == null) { // Vérifier si le joueur a saisi un pseudo ou non
-    Anatidae.HighscoreManager.ShowHighscoreInput(score);
+    Anatidae.HighscoreManager.ShowHighscoreInput(score); // Lui afficher le menu de saisie de pseudo
   }
   else {
-    Anatidae.HighscoreManager.SetHighscore(Anatidae.HighscoreManager.PlayerName, score).ContinueWith(task => { // SetHighscore est asynchrone, nous devons utiliser cette syntaxe
-      if (task.IsFaulted)
-        Debug.LogError(task.Exception);
-      else {
-        // Afficher un message "Nouveau record enregistré !"
-      }
-    });
+    // Enregistrer directement un nouveau record avec le pseudo précédemment saisi
+    StartCoroutine(Anatidae.HighscoreManager.SetHighscore(Anatidae.HighscoreManager.PlayerName, score)); 
   }
 }
 ```
