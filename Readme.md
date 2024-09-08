@@ -100,9 +100,9 @@ Voici les différentes méthodes utilisables dans vos scripts :
     - Retourne `true` si le record est dans le top 10 de la borne.
 - `void Anatidae.HighscoreManager.ShowHighscoreInput()`
     - Affiche l'écran de saisie de nom pour un highscore. Le score s'envoie après la saisie de "END" et le menu se ferme automatiquement.
-- `Task<bool> Anatidae.HighscoreManager.SetHighscore(string name, int score)`
+- `IEnumerator Anatidae.HighscoreManager.SetHighscore(string name, int score)`
     - Méthode asynchrone qui permet d’envoyer un score à la borne sans passer par le menu `HighscoreNameInput`.
-- `Task<Dictionary<string, int>> Anatidae.HighscoreManager.FetchHighscores()`
+- `TIEnumerator Anatidae.HighscoreManager.FetchHighscores()`
     - Méthode asynchrone pour récupérer les highscores de la borne sans passer par `HighscoreUI`.
 
 **Champs :**
