@@ -4,15 +4,15 @@ using UnityEngine;
 using TMPro;
 
 namespace Anatidae {
-    public class HighscoreEntry : MonoBehaviour
+    public class HighscoreEntryGo : MonoBehaviour
     {
         [SerializeField] TMP_Text nameText;
         [SerializeField] TMP_Text scoreText;
 
-        public void SetData(string name, int score)
+        public void SetData(HighscoreManager.HighscoreEntry entry)
         {
-            nameText.text = name;
-            scoreText.text = score.ToString();
+            nameText.text = entry.name;
+            scoreText.text = entry.score.ToString();
         }
 
         public void SetScale(float scale)

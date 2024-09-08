@@ -1,30 +1,33 @@
-/*
- Le HighscoreManager est un singleton qui permet de récupérer et d'envoyer des highscores à la borne en json, qui est un serveur Node.js.
- La méthode GetHighscores() retourne un Dictionary<string, int> des scores de la borne.
- Il s'occupe également d'écouter l'évènement OnApplicationQuit pour retourner au menu principal de la borne.
-*/
-
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
-using System.Threading.Tasks;
 using UnityEngine;
-using UnityEditor;
-using System.Linq;
+using UnityEngine.Networking;
+using System.Collections;
+using System.Text;
 
 namespace Anatidae {
+
     public class HighscoreManager : MonoBehaviour
     {
-        struct HighscoreData
+        const string GAME_NAME = "Votre_nom_de_jeu";
+
+
+        [Serializable]
+        public struct HighscoreData
         {
-            public Dictionary<string, int> highscores;
+            public List<HighscoreEntry> highscores;
+        }
+
+        [Serializable]
+        public struct HighscoreEntry
+        {
+            public string name;
+            public int score;
         }
 
         public static HighscoreManager Instance { get; private set; }
-        public static Dictionary<string, int> Highscores { get; private set;}
+        public static List<HighscoreEntry> Highscores { get; private set;}
         public static bool HasFetchedHighscores { get; private set; }
         public static bool IsHighscoreInputScreenShown { get; private set; }
         public static string PlayerName;
@@ -52,6 +55,20 @@ namespace Anatidae {
 
         [DllImport("__Internal")]
         public static extern void BackToMenu();
+
+        float exitTimer = 0f;
+        const float exitTime = 1f;
+        void Update()
+        {
+            if (Input.GetButtonDown("Coin"))
+                exitTimer += Time.deltaTime;
+            else
+                exitTimer = 0f;
+            
+            if (exitTimer >= exitTime)
+                Application.Quit();
+
+        }
 
         public static void ShowHighscores()
         {
@@ -95,58 +112,44 @@ namespace Anatidae {
             IsHighscoreInputScreenShown = false;
         }
 
-        public static async Task<Dictionary<string, int>> GetHighscores()
+        public static IEnumerator FetchHighscores()
         {
-            HttpClient client = new HttpClient {
-                BaseAddress = new Uri("http://localhost:3000/api/?game=" + PlayerSettings.productName)
-            };
-            client.DefaultRequestHeaders.Accept.Add(
-            new MediaTypeWithQualityHeaderValue("application/json"));
-            HttpResponseMessage response = await client.GetAsync("");
+            UnityWebRequest request = UnityWebRequest.Get("http://localhost:3000/api/?game=" + GAME_NAME);
+            yield return request.SendWebRequest();
 
-            if (response.IsSuccessStatusCode) {
-                var data = await response.Content.ReadAsStringAsync();
+            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError(request.error);
+            }
+            else
+            {
+                string data = request.downloadHandler.text;
                 try {
-                    HighscoreData highscoreData = JsonConvert.DeserializeObject<HighscoreData>(data);
+                    HighscoreData highscoreData = JsonUtility.FromJson<HighscoreData>(data);
                     Highscores = highscoreData.highscores;
                     HasFetchedHighscores = true;
                 } catch (Exception e) {
                     Debug.LogError(e);
-                    return null;
                 }
-                client.Dispose();
-                return Highscores;
-            }
-            else {
-                Debug.LogError($"{(int)response.StatusCode} ({response.ReasonPhrase})");
-                client.Dispose();
-                return null;
             }
         }
 
-        public static async Task<bool> SetHighscore(string name, int score)
+        public static IEnumerator SetHighscore(string name, int score)
         {
-            HttpClient client = new HttpClient {
-                BaseAddress = new Uri("http://localhost:3000/api/?game=" + PlayerSettings.productName)
+            Debug.Log(JsonUtility.ToJson(new HighscoreEntry { name = name, score = score }));
+
+            UnityWebRequest request = new UnityWebRequest("http://localhost:3000/api/?game=" + GAME_NAME)
+            {
+                method = UnityWebRequest.kHttpVerbPOST,
+                uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(JsonUtility.ToJson(new HighscoreEntry { name = name, score = score })))
+                {
+                    contentType = "application/json"
+                }
             };
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json")
-            );
-
-            var content = new StringContent(JsonConvert.SerializeObject(new { name, score }));
-            Debug.Log(content.ReadAsStringAsync().Result); 
-            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
-
-            HttpResponseMessage response = await client.PostAsync("", content);
-
-            if (response.IsSuccessStatusCode) {
-                return true;
-            }
-            else {
-                Debug.LogError($"{(int)response.StatusCode} ({response.Content.ReadAsStringAsync().Result})");
-                client.Dispose();
-                return false;
-            }
+            
+            yield return request.SendWebRequest();
+            if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
+                Debug.LogError(request.error);
         }
 
         public static bool IsHighscore(int score)
@@ -156,22 +159,18 @@ namespace Anatidae {
         
         public static bool IsHighscore(string name, int score)
         {
-            Debug.Log($"Checking if {name} with score {score} is a highscore.");
-
-            Debug.Log((Highscores.Count < 10)? "Less than 10 scores": $"Lowest score is {Highscores.Values.Skip(9).Take(1).First()}");
-
             if (name == null)
             {
                 if (Highscores == null)
                     return false;
                 if (Highscores.Count < 10)
                     return true;
-                if (Highscores.Values.Skip(9).Take(1).First() < score)
+                if (score > Highscores[Highscores.Count - 1].score)
                     return true;
             } else {
-                if (Highscores.ContainsKey(name))
-                    if (Highscores[name] < score)
-                        return true;
+                HighscoreEntry? entry = Highscores.Find(entry => entry.name == name);
+                if(entry?.score < score)
+                    return true;
             }
             return false;
         }

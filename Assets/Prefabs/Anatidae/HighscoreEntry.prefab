@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3005982684270787954}
-  - component: {fileID: 3005982684270787955}
+  - component: {fileID: 5408840740901463325}
   m_Layer: 5
   m_Name: HighscoreEntry
   m_TagString: Untagged
@@ -39,7 +39,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 180, y: 50}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &3005982684270787955
+--- !u!114 &5408840740901463325
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3005982684270787957}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0be4d5c646ea20845a8219f43b2e669d, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b0e6874d64e08e408cf68958c01c4cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 3005982685385196104}

@@ -3472,7 +3472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   letterCaroussel: {fileID: 8933480212378349995}
-  scoreText: {fileID: 0}
+  scoreText: {fileID: 4009570743799575499}
   inputName: {fileID: 4193081324828233102}
 --- !u!1 &3066320999767675092
 GameObject:
