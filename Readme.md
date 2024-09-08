@@ -102,7 +102,7 @@ Voici les différentes méthodes utilisables dans vos scripts :
     - Affiche l'écran de saisie de nom pour un highscore. Le score s'envoie après la saisie de "END" et le menu se ferme automatiquement.
 - `Task<bool> Anatidae.HighscoreManager.SetHighscore(string name, int score)`
     - Méthode asynchrone qui permet d’envoyer un score à la borne sans passer par le menu `HighscoreNameInput`.
-- `Task<Dictionary<string, int>> Anatidae.HighscoreManager.GetHighscores()`
+- `Task<Dictionary<string, int>> Anatidae.HighscoreManager.FetchHighscores()`
     - Méthode asynchrone pour récupérer les highscores de la borne sans passer par `HighscoreUI`.
 
 **Champs :**
