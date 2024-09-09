@@ -66,7 +66,7 @@ Dans le projet exemple, les boutons et axes sont attribués aux touches du clavi
 | Type | Nom |
 |:---:|-----|
 | Axes | P1_Vertical, P1_Horizontal, P2_Vertical, P2_Horizontal |
-| Boutons | P1_B1, P1_B2, P1_B3, P1_B4, P1_B5, P1_B6, P1_Left, P1_Right, P1_Up, P1_Down, P2_B1, P2_B2, P2_B3, P2_B4, P2_B5, P2_B6, Coin|
+| Boutons | P1_Start, P1_B1, P1_B2, P1_B3, P1_B4, P1_B5, P1_B6, P2_Start, P2_B1, P2_B2, P2_B3, P2_B4, P2_B5, P2_B6, Coin|
 
 Pour les utiliser dans vos scripts, écrivez `Input.GetAxis("P1_Horizontal")` ou `Input.GetButtonDown("P2_B4")` par exemple.
 
