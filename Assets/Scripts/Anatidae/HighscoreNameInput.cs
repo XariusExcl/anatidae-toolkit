@@ -88,7 +88,7 @@ namespace Anatidae {
                 lastKeyInputTime = Time.time;
 
             }
-            else if (Input.GetButtonDown("P1_B1") || Input.GetButtonDown("P2_B1"))
+            else if (Input.GetButtonDown("P1_B1"))
             {
                 if (carousselLetterIndex == alphabet.Length - 2) { // Submit
                     HighscoreManager.PlayerName = Regex.Replace(new string(playerName), @"\0", "_");

@@ -56,16 +56,9 @@ namespace Anatidae {
         [DllImport("__Internal")]
         public static extern void BackToMenu();
 
-        float exitTimer = 0f;
-        const float exitTime = 1f;
         void Update()
         {
             if (Input.GetButtonDown("Coin"))
-                exitTimer += Time.deltaTime;
-            else
-                exitTimer = 0f;
-            
-            if (exitTimer >= exitTime)
                 Application.Quit();
 
         }
