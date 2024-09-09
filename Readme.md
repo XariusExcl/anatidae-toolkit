@@ -36,8 +36,9 @@ creator: string,
 year: number,
 type: string,
 players: string,
-highscores: object,
+highscores: array,
 ```
+(highscores étant un array d'objets {name: string ,score: int}
 
 Voici un fichier vierge que vous pouvez utiliser :
 
@@ -49,7 +50,7 @@ Voici un fichier vierge que vous pouvez utiliser :
   "year": 2024,
   "type": "",
   "players": "",
-  "highscores": {}
+  "highscores": []
 }
 ```
 
