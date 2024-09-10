@@ -151,7 +151,7 @@ namespace Anatidae {
                     return false;
                 if (Highscores.Count < 10)
                     return true;
-                if (score > Highscores[Highscores.Count - 1].score)
+                if (score > Highscores[9].score)
                     return true;
             } else {
                 HighscoreEntry? entry = Highscores.Find(entry => entry.name == name);
