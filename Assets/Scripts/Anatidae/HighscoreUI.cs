@@ -21,7 +21,6 @@ namespace Anatidae {
         {
             Debug.Log("Fetching highscores...", this);
             yield return HighscoreManager.FetchHighscores();
-            Debug.Log("Highscores fetched!", this);
             UpdateHighscoreEntries();
         }
 

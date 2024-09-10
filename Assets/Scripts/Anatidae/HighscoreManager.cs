@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.Collections;
@@ -10,7 +9,10 @@ namespace Anatidae {
 
     public class HighscoreManager : MonoBehaviour
     {
-        const string GAME_NAME = "Votre_nom_de_jeu";
+        // Changez cette variable par le nom de votre jeu
+        // Ce nom sera le même que le nom du dossier contenant votre build, il ne doit donc pas contenir de caractères spéciaux ni d'espaces
+        // Cette variable est utilisée pour stocker les highscores sur le serveur !
+        const string GameName = "Votre_nom_de_jeu";
 
 
         [Serializable]
@@ -51,16 +53,6 @@ namespace Anatidae {
             if (Instance.highscoreUi is null)
                 Debug.LogError("HighscoreUI de HighscoreManager n'est pas défini.");
             else highscoreUi.gameObject.SetActive(false);
-        }
-
-        [DllImport("__Internal")]
-        public static extern void BackToMenu();
-
-        void Update()
-        {
-            if (Input.GetButtonDown("Coin"))
-                Application.Quit();
-
         }
 
         public static void ShowHighscores()
@@ -107,7 +99,7 @@ namespace Anatidae {
 
         public static IEnumerator FetchHighscores()
         {
-            UnityWebRequest request = UnityWebRequest.Get("http://localhost:3000/api/?game=" + GAME_NAME);
+            UnityWebRequest request = UnityWebRequest.Get("http://localhost:3000/api/?game=" + GameName);
             yield return request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
@@ -121,6 +113,7 @@ namespace Anatidae {
                     HighscoreData highscoreData = JsonUtility.FromJson<HighscoreData>(data);
                     Highscores = highscoreData.highscores;
                     HasFetchedHighscores = true;
+                    Debug.Log("Highscores fetched!");
                 } catch (Exception e) {
                     Debug.LogError(e);
                 }
@@ -131,7 +124,7 @@ namespace Anatidae {
         {
             Debug.Log(JsonUtility.ToJson(new HighscoreEntry { name = name, score = score }));
 
-            UnityWebRequest request = new UnityWebRequest("http://localhost:3000/api/?game=" + GAME_NAME)
+            UnityWebRequest request = new UnityWebRequest("http://localhost:3000/api/?game=" + GameName)
             {
                 method = UnityWebRequest.kHttpVerbPOST,
                 uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(JsonUtility.ToJson(new HighscoreEntry { name = name, score = score })))
@@ -166,11 +159,6 @@ namespace Anatidae {
                     return true;
             }
             return false;
-        }
-
-        public void OnApplicationQuit()
-        {
-            BackToMenu();
         }
     }
 }
