@@ -16,8 +16,6 @@ public class MenuManager : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(afkTimer - AfkTime + 10f * 0.5f);
-
         if (heldQuitTimer >= HeldQuitTime || afkTimer >= AfkTime) {
             BackToMenu();
         }
