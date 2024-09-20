@@ -3431,6 +3431,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4322871356919436626}
   - component: {fileID: 9211291115323095055}
+  - component: {fileID: 4033459760678444837}
   m_Layer: 5
   m_Name: Highscore Input
   m_TagString: Untagged
@@ -3474,6 +3475,27 @@ MonoBehaviour:
   letterCaroussel: {fileID: 8933480212378349995}
   scoreText: {fileID: 4009570743799575499}
   inputName: {fileID: 4193081324828233102}
+--- !u!95 &4033459760678444837
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2991524362918168851}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3f0b48a9a693ca84f94a48cb35a607fe, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &3066320999767675092
 GameObject:
   m_ObjectHideFlags: 0
