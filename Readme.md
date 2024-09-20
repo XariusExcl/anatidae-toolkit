@@ -60,6 +60,8 @@ Voici un fichier vierge que vous pouvez utiliser :
 
 Le toolkit actuel utilise l’ancien Input Manager. Des axes et des boutons sont créés pour correspondre aux contrôleurs de la borne.
 
+Si vous utilisez le .unitypackage pour rendre compatible un jeu existant, remplacez le fichier `InputManager.asset` dans le dossier ProjectSettings/ par celui que vous avez téléchargé.
+
 Dans le projet exemple, les boutons et axes sont attribués aux touches du clavier suivantes :
 
 ![Untitled](2.png)
