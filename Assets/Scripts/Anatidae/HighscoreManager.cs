@@ -13,7 +13,8 @@ namespace Anatidae {
         // Ce nom sera le même que le nom du dossier contenant votre build, il ne doit donc pas contenir de caractères spéciaux ni d'espaces
         // Cette variable est utilisée pour stocker les highscores sur le serveur !
         const string GameName = "Votre_nom_de_jeu";
-
+        // Changez cette variable pour définir quand est-ce qu'un score est considéré comme un highscore (top 10 par défaut)
+        const int NumHighscores = 10;
 
         [Serializable]
         public struct HighscoreData
@@ -99,6 +100,7 @@ namespace Anatidae {
 
         public static IEnumerator FetchHighscores()
         {
+            Debug.Log("HighscoreManager: Fetching highscores...");
             UnityWebRequest request = UnityWebRequest.Get("http://localhost:3000/api/?game=" + GameName);
             yield return request.SendWebRequest();
 
@@ -113,7 +115,7 @@ namespace Anatidae {
                     HighscoreData highscoreData = JsonUtility.FromJson<HighscoreData>(data);
                     Highscores = highscoreData.highscores;
                     HasFetchedHighscores = true;
-                    Debug.Log("Highscores fetched!");
+                    Debug.Log("HighscoreManager: Highscores fetched!");
                 } catch (Exception e) {
                     Debug.LogError(e);
                 }
@@ -136,6 +138,8 @@ namespace Anatidae {
             yield return request.SendWebRequest();
             if (request.result == UnityWebRequest.Result.ConnectionError || request.result == UnityWebRequest.Result.ProtocolError)
                 Debug.LogError(request.error);
+
+            yield return FetchHighscores();
         }
 
         public static bool IsHighscore(int score)
@@ -145,13 +149,14 @@ namespace Anatidae {
         
         public static bool IsHighscore(string name, int score)
         {
+            if (!HasFetchedHighscores) {
+                Debug.LogError("HighscoreManager: IsHighscore() appelé avant que les highscores ne soient récupérés. Appelez la coroutine FetchHighscores() avant d'utiliser IsHighscore().");
+                return false;
+            }
+
             if (name == null)
             {
-                if (Highscores == null)
-                    return false;
-                if (Highscores.Count < 10)
-                    return true;
-                if (score > Highscores[9].score)
+                if (Highscores == null || Highscores.Count < NumHighscores || score > Highscores[NumHighscores - 1].score)
                     return true;
             } else {
                 HighscoreEntry? entry = Highscores.Find(entry => entry.name == name);
