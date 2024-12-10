@@ -10,14 +10,14 @@ Anatidae Toolkit contient tous les éléments nécessaires pour créer un jeu co
 
 ## 0. Contenu du toolkit
 
-Ce repo contient différents éléments pour démarrer un projet ou ajouter les fonctionnalités Anatidae à un jeu existant :
+Ce repo contient les éléments pour démarrer un projet compatible Anatidae ou pour ajouter les fonctionnalités Anatidae à un jeu existant :
 
-- Un projet vierge configuré correctement pour démarrer un projet qui sera jouable sur la borne
-- Anatidae.unitypackage (onglet Releases) : Pour rendre un jeu existant compatible avec la borne (de la configuration supplémentaire sera nécessaire, c.f [**3. Anatidae Toolkit pour Unity**](#3-anatidae-toolkit-pour-unity)).
+- **Un projet Unity** configuré pour créer un jeu compatible avec Anatidae
+- **Anatidae.unitypackage** (onglet Releases) : Pour rendre un jeu Unity existant compatible avec la borne (de la configuration supplémentaire sera nécessaire, c.f [**3. Anatidae Toolkit pour Unity**](#3-anatidae-toolkit-pour-unity)).
 
 ## 1. Fonctionnement de Anatidae
 
-Anatidae est une application qui permet de naviguer et lancer des jeux compatible Web d'une libririe, ainsi que de stocker des informations supplémentaires sur le jeu et/ou des highscores.
+Anatidae est une interface qui permet de naviguer et lancer des jeux compatible WebGL d'une libririe, ainsi que de stocker des informations supplémentaires au jeu à l'aide de l'[API](#4-anatidae-api).
 
 ## 2. Déploiement d’un jeu sur Anatidae Arcade
 
