@@ -1,13 +1,19 @@
 # Anatidae Toolkit
 
-Anatidae Toolkit contient tous les éléments nécessaires pour créer un jeu compatible avec la borne d'arcade MMI. 
+Anatidae Toolkit contient tous les éléments nécessaires pour créer un jeu compatible avec la borne d'arcade MMI.
+
+1. [Fonctionnement de Anatidae](#1-fonctionnement-de-anatidae)
+2. [Déploiement d’un jeu sur Anatidae Arcade](#2-déploiement-dun-jeu-sur-anatidae-arcade)
+3. [Anatidae Toolkit pour Unity](#3-anatidae-toolkit-pour-unity)
+4. [Anatidae API](#4-anatidae-api)
+
 
 ## 0. Contenu du toolkit
 
 Ce repo contient différents éléments pour démarrer un projet ou ajouter les fonctionnalités Anatidae à un jeu existant :
 
 - Un projet vierge configuré correctement pour démarrer un projet qui sera jouable sur la borne
-- Anatidae.unitypackage (onglet Releases) : Pour rendre un jeu existant compatible avec la borne (de la configuration supplémentaire sera nécessaire, c.f **3. Anatidae Toolkit pour Unity**).
+- Anatidae.unitypackage (onglet Releases) : Pour rendre un jeu existant compatible avec la borne (de la configuration supplémentaire sera nécessaire, c.f [**3. Anatidae Toolkit pour Unity**](#3-anatidae-toolkit-pour-unity)).
 
 ## 1. Fonctionnement de Anatidae
 
@@ -23,38 +29,49 @@ Chaque jeu mis sur la borne a besoin de ces 3 fichiers pour fonctionner correcte
 - **thumbnail.png :** L’image de couverture de votre jeu, affichée en background et en miniature (privilégiez un format carré 1:1).
 - **info.json :** Les informations de votre jeu, vu en détail ci-dessous.
 
-![Untitled](1.png)
+<img src="1.png" height="320px"/>
+
+### Fichiers optionnels :
+
+Optionnellement, vous pouvez intégrer un fichier **attract.mp4** pour afficher une courte vidéo trailer de **20 secondes max** :
+
+<img src="attract.png" height="320px"/>
 
 ### info.json
 
 Le fichier info.json stocke les informations de votre jeu (et optionnellement les highscores). Il doit être structuré de cette manière :
 
+```yaml
+name: string
+description: string
+creator: string
+year: number
+type: string
+players: string
+# optionnel
+highscores: array
+catchphrase: string
 ```
-name: string,
-description: string, 
-creator: string,
-year: number,
-type: string,
-players: string,
-highscores: array,
+Avec highscores, un tableau contenant des objets comme ceci :
+```yaml
+name: string
+score: int
 ```
-(highscores étant un array d'objets {name: string ,score: int}
 
-Voici un fichier vierge que vous pouvez utiliser :
+Voici un exemple que vous pouvez utiliser :
 
 ```json
 {
   "name": "",
   "description": "",
   "creator": "",
-  "year": 2024,
+  "year": 2025,
   "type": "",
-  "players": "",
-  "highscores": []
+  "players": ""
 }
 ```
 
-## 3. Anatidae Toolkit pour Unity :
+## 3. Anatidae Toolkit pour Unity
 
 ### Input
 
@@ -64,13 +81,14 @@ Si vous utilisez le .unitypackage pour rendre compatible un jeu existant, rempla
 
 Dans le projet exemple, les boutons et axes sont attribués aux touches du clavier suivantes :
 
-![Untitled](2.png)
+<img src="2.png" height="320px"/>
+
 | Type | Nom |
 |:---:|-----|
 | Axes | P1_Vertical, P1_Horizontal, P2_Vertical, P2_Horizontal |
 | Boutons | P1_Start, P1_B1, P1_B2, P1_B3, P1_B4, P1_B5, P1_B6, P2_Start, P2_B1, P2_B2, P2_B3, P2_B4, P2_B5, P2_B6, Coin|
 
-Pour les utiliser dans vos scripts, écrivez `Input.GetAxis("P1_Horizontal")` ou `Input.GetButtonDown("P2_B4")` par exemple.
+Pour les utiliser dans vos scripts, vous pouvez écrire `Input.GetAxis("P1_Horizontal")` ou `Input.GetButtonDown("P2_B4")` par exemple.
 
 ### Prefab AnatidaeInterface
 
@@ -81,7 +99,7 @@ Le prefab AnatidaeInterface doit se trouver dans chaque scène où vous utiliser
 
 Vous pouvez modifier l’esthétique de ces objets librement.
 
-![Untitled](3.png)
+<img src="3.png" height="320px"/>
 
 ### Anatidae namespace (C#)
 
@@ -128,7 +146,7 @@ if (Anatidae.HighscoreManager.IsHighscore(score))
 }
 ```
 
-Le prefab s’occupera d’envoyer le score avec le pseudo saisi (stocké ensuite dans `Anatidae.HighscoreManager.PlayerName`) et de se fermer automatiquement lorsque l’envoi est réussi. Facile !
+Le prefab s’occupera d’envoyer le score avec le pseudo saisi (stocké ensuite dans `Anatidae.HighscoreManager.PlayerName`) et de se fermer automatiquement lorsque l’envoi est réussi.
 
 Maintenant, supposons que le joueur termine sa partie avec un nouveau record personnel et a déjà saisi son nom précédemment. Vous pouvez choisir d’envoyer le nouveau record sans afficher le menu de saisie de pseudo.
 
@@ -149,10 +167,10 @@ if (Anatidae.HighscoreManager.IsHighscore(score))
 
 ## 4. Anatidae API
 
-Si vous souhaitez interfacer directement avec le serveur (si vous faites un jeu en Javascript pur ou avec un moteur de jeu différent), vous pouvez communiquer avec l’API Anatidae directement.
+Si vous souhaitez interfacer directement avec le serveur (si vous faites un jeu en Javascript pur ou avec un moteur de jeu différent), vous pouvez communiquer avec l’API Anatidae.
 
 Il est très recommandé d’installer le serveur en local, disponible ici :
 
 [https://github.com/XariusExcl/anatidae-arcade](https://github.com/XariusExcl/anatidae-arcade)
 
-La documentation de l’API y est également présente. Il suffit d’envoyer des requêtes GET et POST sur [`localhost:3000`](http://localhost:3000) et vous êtes partis !
+La documentation de l’API y est également présente. Il suffit d’envoyer des requêtes `GET` et `POST` sur [`localhost:3000/[votreJeu]`](http://localhost:3000) et vous êtes partis !
