@@ -5,7 +5,7 @@ using TMPro;
 public class MenuManager : MonoBehaviour
 {
     [SerializeField] TMP_Text quitText;
-    const float AfkTime = 200f;
+    const float AfkTime = 60f;
     float afkTimer = 0f;
     const float HeldQuitTime = 1.5f;
     float heldQuitTimer = 0f;
