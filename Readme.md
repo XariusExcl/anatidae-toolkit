@@ -49,14 +49,16 @@ year: number
 type: string
 players: string
 # optionnel
-highscores: array
 catchphrase: string
+config: object
 ```
-Avec highscores, un tableau contenant des objets comme ceci :
+Avec config, un objet contenant ces éléments comme ceci :
 ```yaml
-name: string
-score: int
+scoreType: string ("time", "distance" ou "score")
+# optionnel
+scoreUnit: string (utilisé pour "distance" : 'm', 'km'...)
 ```
+
 
 Voici un exemple que vous pouvez utiliser :
 
