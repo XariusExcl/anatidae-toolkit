@@ -57,6 +57,7 @@ Avec config, un objet contenant ces éléments comme ceci :
 scoreType: string ("time", "distance" ou "score")
 # optionnel
 scoreUnit: string (utilisé pour "distance" : 'm', 'km'...)
+scoreSort: string ("asc" ou "desc")
 ```
 
 
