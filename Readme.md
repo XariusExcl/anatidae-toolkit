@@ -1,9 +1,9 @@
 # Anatidae Toolkit
 
-Anatidae Toolkit contient tous les éléments nécessaires pour créer un jeu compatible avec la borne d'arcade MMI.
+Anatidae Toolkit contient tous les éléments nécessaires pour créer un jeu compatible avec la borne d'arcade MMI grâce au moteur Unity.
 
 1. [Fonctionnement de Anatidae](#1-fonctionnement-de-anatidae)
-2. [Déploiement d’un jeu sur Anatidae Arcade](#2-déploiement-dun-jeu-sur-anatidae-arcade)
+2. [Déploiement d’un jeu sur Anatidae](#2-déploiement-dun-jeu-sur-anatidae-arcade)
 3. [Anatidae Toolkit pour Unity](#3-anatidae-toolkit-pour-unity)
 4. [Anatidae API](#4-anatidae-api)
 
@@ -13,13 +13,13 @@ Anatidae Toolkit contient tous les éléments nécessaires pour créer un jeu co
 Ce repo contient les éléments pour démarrer un projet compatible Anatidae ou pour ajouter les fonctionnalités Anatidae à un jeu existant :
 
 - **Un projet Unity** configuré pour créer un jeu compatible avec Anatidae
-- **Anatidae.unitypackage** (onglet Releases) : Pour rendre un jeu Unity existant compatible avec la borne (de la configuration supplémentaire sera nécessaire, c.f [**3. Anatidae Toolkit pour Unity**](#3-anatidae-toolkit-pour-unity)).
+- **Anatidae_toolkit.unitypackage** (onglet Releases) : Pour rendre un jeu Unity existant compatible avec la borne (de la configuration supplémentaire sera nécessaire, c.f [**3. Anatidae Toolkit pour Unity**](#3-anatidae-toolkit-pour-unity)).
 
 ## 1. Fonctionnement de Anatidae
 
-Anatidae est une interface qui permet de naviguer et lancer des jeux compatible WebGL d'une libririe, ainsi que de stocker des informations supplémentaires au jeu à l'aide de l'[API](#4-anatidae-api).
+Anatidae est une interface qui permet de sélectionner des jeux WebGL stockés dans un dossier, ainsi que de stocker des informations supplémentaires au jeu à l'aide de l'[API](#4-anatidae-api). Son code source est disponible ici : [**anatidae-arcade**](https://github.com/XariusExcl/anatidae-arcade)
 
-## 2. Déploiement d’un jeu sur Anatidae Arcade
+## 2. Déploiement d’un jeu sur Anatidae
 
 ### Fichiers nécessaires :
 
@@ -39,7 +39,7 @@ Optionnellement, vous pouvez intégrer un fichier **attract.mp4** pour afficher 
 
 ### info.json
 
-Le fichier info.json stocke les informations de votre jeu (et optionnellement les highscores). Il doit être structuré de cette manière :
+Le fichier info.json stocke les métadonnées de votre jeu. Il doit être structuré de cette manière :
 
 ```yaml
 name: string
@@ -70,7 +70,13 @@ Voici un exemple que vous pouvez utiliser :
   "creator": "",
   "year": 2025,
   "type": "",
-  "players": ""
+  "players": "",
+  "catchphrase": "Jouez maintenant !",
+  "config": {
+    "scoreType": "score",
+    "scoreUnit": "",
+    "scoreSort": "desc"
+  }
 }
 ```
 
@@ -95,7 +101,7 @@ Pour les utiliser dans vos scripts, vous pouvez écrire `Input.GetAxis("P1_Horiz
 
 ### Prefab AnatidaeInterface
 
-Le prefab AnatidaeInterface doit se trouver dans chaque scène où vous utiliserez les menus Anatidae : Affichage des highscores existants ou la saisie d’un nouvel highscore.
+Le prefab AnatidaeInterface doit se trouver dans chaque scène de votre jeu. Il contient différents GameObjects :
 
 - `HighscoreNameInput` Est le menu de saisie d’un highscore par le joueur.
 - `HighscoreUI` Est l’écran d’affichage des highscores existants. Les highscores affichés utilisent le prefab `HighscoreEntry`.
