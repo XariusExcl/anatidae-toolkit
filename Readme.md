@@ -2,12 +2,6 @@
 
 Anatidae Toolkit contient tous les éléments nécessaires pour créer un jeu compatible avec la borne d'arcade MMI grâce au moteur Unity.
 
-1. [Fonctionnement de Anatidae](#1-fonctionnement-de-anatidae)
-2. [Déploiement d’un jeu sur Anatidae](#2-déploiement-dun-jeu-sur-anatidae-arcade)
-3. [Anatidae Toolkit pour Unity](#3-anatidae-toolkit-pour-unity)
-4. [Anatidae API](#4-anatidae-api)
-
-
 ## 0. Contenu du toolkit
 
 Ce repo contient les éléments pour démarrer un projet compatible Anatidae ou pour ajouter les fonctionnalités Anatidae à un jeu existant :
@@ -19,68 +13,7 @@ Ce repo contient les éléments pour démarrer un projet compatible Anatidae ou 
 
 Anatidae est une interface qui permet de sélectionner des jeux WebGL stockés dans un dossier, ainsi que de stocker des informations supplémentaires au jeu à l'aide de l'[API](#4-anatidae-api). Son code source est disponible ici : [**anatidae-arcade**](https://github.com/XariusExcl/anatidae-arcade)
 
-## 2. Déploiement d’un jeu sur Anatidae
-
-### Fichiers nécessaires :
-
-Chaque jeu mis sur la borne a besoin de ces 3 fichiers pour fonctionner correctement :
-
-- **index.html** : La page qui contient votre jeu.
-- **thumbnail.png :** L’image de couverture de votre jeu, affichée en background et en miniature (privilégiez un format carré 1:1).
-- **info.json :** Les informations de votre jeu, vu en détail ci-dessous.
-
-<img src="1.png" height="320px"/>
-
-### Fichiers optionnels :
-
-Optionnellement, vous pouvez intégrer un fichier **attract.mp4** pour afficher une courte vidéo trailer de **20 secondes max** :
-
-<img src="attract.png" height="320px"/>
-
-### info.json
-
-Le fichier info.json stocke les métadonnées de votre jeu. Il doit être structuré de cette manière :
-
-```yaml
-name: string
-description: string
-creator: string
-year: number
-type: string
-players: string
-# optionnel
-catchphrase: string
-config: object
-```
-Avec config, un objet contenant ces éléments comme ceci :
-```yaml
-scoreType: string ("time", "distance" ou "score")
-# optionnel
-scoreUnit: string (utilisé pour "distance" : 'm', 'km'...)
-scoreSort: string ("asc" ou "desc")
-```
-
-
-Voici un exemple que vous pouvez utiliser :
-
-```json
-{
-  "name": "",
-  "description": "",
-  "creator": "",
-  "year": 2025,
-  "type": "",
-  "players": "",
-  "catchphrase": "Jouez maintenant !",
-  "config": {
-    "scoreType": "score",
-    "scoreUnit": "",
-    "scoreSort": "desc"
-  }
-}
-```
-
-## 3. Anatidae Toolkit pour Unity
+## 2. Anatidae Toolkit pour Unity
 
 ### Input
 
@@ -173,13 +106,3 @@ if (Anatidae.HighscoreManager.IsHighscore(score))
   }
 }
 ```
-
-## 4. Anatidae API
-
-Si vous souhaitez interfacer directement avec le serveur (si vous faites un jeu en Javascript pur ou avec un moteur de jeu différent), vous pouvez communiquer avec l’API Anatidae.
-
-Il est très recommandé d’installer le serveur en local, disponible ici :
-
-[https://github.com/XariusExcl/anatidae-arcade](https://github.com/XariusExcl/anatidae-arcade)
-
-La documentation de l’API y est également présente. Il suffit d’envoyer des requêtes `GET` et `POST` sur [`localhost:3000/[votreJeu]`](http://localhost:3000) et vous êtes partis !
