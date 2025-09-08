@@ -1,7 +1,7 @@
 /*
  Vous n'aurez pas besoin de modifier cette classe ! Elle est utilisée pour la saisie du highscore par le joueur à la fin de la partie.
  La méthode ShowHighscoreInput() et HideHighscoreInput() permettent d'afficher et de cacher l'interface.
- Les animations sont dans Assets/Animations/Anatidae.
+ Les animations sont dans Anatidae/Animations.
 */
 
 using TMPro;
@@ -122,7 +122,7 @@ namespace Anatidae {
         IEnumerator SetHighscore(string name, int score)
         {
             yield return HighscoreManager.SetHighscore(name, score);
-            Debug.Log("HighscoreNameInput: Highscore submitted");
+            Debug.Log("HighscoreNameInput : Highscore envoyé !");
             FadeoutHighscoreInput();
         }
     }

@@ -1,3 +1,7 @@
+/*
+ Gère le "bouton blanc" et le minuteur d'inactivité.
+*/
+
 using UnityEngine;
 using System.Runtime.InteropServices;
 using TMPro;

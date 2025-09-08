@@ -1,3 +1,7 @@
+/*
+ Logique pour l'affichage des highscores en partie.
+*/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -19,7 +23,7 @@ namespace Anatidae {
 
         IEnumerator Init()
         {
-            Debug.Log("Fetching highscores...", this);
+            Debug.Log("Récupération des highscores...", this);
             yield return HighscoreManager.FetchHighscores();
             UpdateHighscoreEntries();
         }

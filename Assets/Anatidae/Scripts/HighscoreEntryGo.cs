@@ -1,5 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+/*
+ Logique pour l'affichage d'une entrée highscore pour le menu HighscoreUI.
+*/
+
 using UnityEngine;
 using TMPro;
 
